@@ -1,5 +1,8 @@
 package com.loginapp.loginapp.model;
 
+import com.loginapp.loginapp.dao.DaoSession;
+import com.loginapp.loginapp.dao.DaoUser;
+
 public class User {
 
     private String userName;
@@ -38,4 +41,26 @@ public class User {
     public void setLastName(String lastName) {
         this.lastName = lastName;
     }
+
+    public ResponseSession createSession(){
+        DaoUser daoUser = new DaoUser();
+        daoUser.getUser().setUserName(this.userName);
+        daoUser.getUser().setLastName(this.lastName);
+        daoUser.getUser().setName(this.name);
+        daoUser.getUser().setPass(this.pass);
+
+        Session session = new Session();
+        session.setUserActive(new DaoUser().getUserByUsername(userName));
+        //set new session parametters:
+        //   session.setExpirationDate();
+        //   session.setSessionId();
+        session.setState(true);
+
+        new DaoSession().setSession(session);
+
+        ResponseSession responseSession = new ResponseSession();
+        responseSession.setSession(session);
+        return responseSession;
+    }
+
 }

@@ -1,6 +1,16 @@
 package com.loginapp.loginapp.model;
 
+import com.loginapp.loginapp.dao.DaoSession;
+import com.loginapp.loginapp.dao.DaoUser;
+
 public class Session {
+
+    private String sessionId;
+    private int expirationDate;
+    private User userActive;
+    private boolean state;
+
+
     public String getSessionId() {
         return sessionId;
     }
@@ -25,7 +35,23 @@ public class Session {
         this.userActive = userActive;
     }
 
-    private String sessionId;
-    private int expirationDate;
-    private User userActive;
+    public boolean isState() {
+        return state;
+    }
+
+    public void setState(boolean state) {
+        this.state = state;
+    }
+
+    public ResponseUser getUserById(String sessionId){
+
+        User user = new User();
+        user = new DaoUser().getUserByUsername(new DaoSession()
+                .getUsernameBySessionId(sessionId));
+
+        ResponseUser responseUser = new ResponseUser();
+        responseUser.setUser(user);
+        return responseUser;
+    }
+
 }

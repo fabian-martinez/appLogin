@@ -1,6 +1,6 @@
 package com.loginapp.loginapp.model;
 
-public class ResponseLogin {
+public class ResponseSession {
 
     private Session session;
 
