@@ -1,5 +1,4 @@
 package com.loginapp.loginapp.model;
 
-public interface LoginApp {
-
+public class RequestSession {
 }
