@@ -6,7 +6,11 @@ public class DaoUser {
     User user;
 
     public User getUser() {
-        return user;
+        if (user != null){
+        return user;}
+        else {
+            return user = new User();
+        }
     }
 
     public void setUser(User user) {
