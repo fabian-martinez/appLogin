@@ -1,12 +1,8 @@
 package com.loginapp.loginapp.model;
-import com.loginapp.loginapp.dao.SessionRepository;
-import com.loginapp.loginapp.dao.UserRepository;
-import org.springframework.beans.factory.annotation.Autowired;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
-import java.util.Calendar;
 
 @Entity
 public class Session {
@@ -14,7 +10,7 @@ public class Session {
     @Id
     @GeneratedValue
     private String sessionId;
-    private int expirationDate;
+    private long expirationDate;
     private String userActive;
     private boolean state;
 
@@ -27,11 +23,11 @@ public class Session {
         this.sessionId = sessionId;
     }
 
-    public int getExpirationDate() {
+    public long getExpirationDate() {
         return expirationDate;
     }
 
-    public void setExpirationDate(int expirationDate) {
+    public void setExpirationDate(long expirationDate) {
         this.expirationDate = expirationDate;
     }
 

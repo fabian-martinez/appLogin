@@ -10,7 +10,7 @@ public class User {
     @Id
     @Column(name = "USER_NAME")
     private String userName;
-    @Column(name = "USER_PASS")
+    @Column(name = "PASS")
     private String pass;
     @Column(name = "NAME")
     private String name;

@@ -8,8 +8,8 @@ import { map } from 'rxjs/operators';
 })
 export class AuthService {
 
-  private url = 'https://www.googleapis.com/identitytoolkit/v3/relyingparty';
-  private apikey = 'AIzaSyASKJVwhIbLlDJmihu7_5Zwy7kwQtd7QoU'
+  private url = 'http://localhost:8080';
+  //private apikey = 'AIzaSyASKJVwhIbLlDJmihu7_5Zwy7kwQtd7QoU'
   private userToken = '';
 
   // Crear nuevo usuario : https://www.googleapis.com/identitytoolkit/v3/relyingparty/signupNewUser?key=[API_KEY]
@@ -28,7 +28,7 @@ export class AuthService {
     };
 
     return this.http.post(
-      `${this.url}/verifyPassword?key=${this.apikey}`,
+      `${this.url}/login`,
       authData
     ).pipe(
       map( resp => {
@@ -45,7 +45,7 @@ export class AuthService {
       };
 
     return this.http.post(
-      `${this.url}/signupNewUser?key=${this.apikey}`,
+      `${this.url}/signin`,
       authData
       ).pipe(
         map( resp => {

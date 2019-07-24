@@ -1,5 +1,6 @@
 package com.loginapp.loginapp.model;
 
+import com.loginapp.loginapp.dao.DaoUser;
 import com.loginapp.loginapp.dao.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 
@@ -10,12 +11,11 @@ public class Login {
     private String userName;
     private String pass;
 
-    @Autowired
-    UserRepository userRepository;
 
     public boolean isValidLogin(){
         //query to database for is valid user
-        User user = userRepository.findById(userName).get();
+        User user = new DaoUser().getUserByUsername(this.userName);
+        // User user = userRepository.findById(userName).get();
         return SecurityUtilsForPassword.isExpectedPassword(pass.toCharArray(),
                 Base64.getDecoder().
                         decode(user.getSalt().getBytes()),

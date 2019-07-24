@@ -1,9 +1,13 @@
 package com.loginapp.loginapp.dao;
 
 import com.loginapp.loginapp.model.User;
+import org.springframework.jdbc.core.BeanPropertyRowMapper;
+import org.springframework.jdbc.core.JdbcTemplate;
+import org.springframework.jdbc.datasource.DriverManagerDataSource;
 
 public class DaoUser {
-    User user;
+
+    private User user;
 
     public User getUser() {
         if (user != null){
@@ -17,20 +21,30 @@ public class DaoUser {
         this.user = user;
     }
 
-    public void createUser(User user){
-        this.user = user;
-        //quiery to insert user in DB
+    public void createUser(User user) throws Exception {
+        try {
+            this.user = user;
+            DriverManagerDataSource ds = new DriverManagerDataSource();
+            ds.setDriverClassName("org.h2.Driver");
+            ds.setUrl("jdbc:h2:mem:testdb");
+            ds.setUsername("sa");
+            ds.setPassword("");
+            JdbcTemplate jdbcTemplate = new JdbcTemplate(ds);
+            jdbcTemplate.update("INSERT INTO user (USER_NAME, LASTNAME, NAME, PASS, SALT) VALUES(?,?,?,?,?)",
+                    user.getUserName(),user.getLastName(),user.getName(),user.getPass(),user.getSalt());
+        }catch (Exception ex){
+            throw new Exception("Invalid Access.");
+        }
     }
 
     public User getUserByUsername(String userName){
-        User user = new User();
-        //set user parameters from DB
-        return user;
-    }
-
-    public String getUserPass(String userName){
-        //get pass from DB for userName
-        String pass = "pass";
-        return pass;
+        DriverManagerDataSource ds = new DriverManagerDataSource();
+        ds.setDriverClassName("org.h2.Driver");
+        ds.setUrl("jdbc:h2:mem:testdb");
+        ds.setUsername("sa");
+        ds.setPassword("");
+        JdbcTemplate jdbcTemplate = new JdbcTemplate(ds);
+        return jdbcTemplate.queryForObject("select * from user where user_name=?", new Object[] { userName },
+                new BeanPropertyRowMapper<User>(User.class));
     }
 }
