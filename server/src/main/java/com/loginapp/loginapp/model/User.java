@@ -1,12 +1,8 @@
 package com.loginapp.loginapp.model;
 
-import com.loginapp.loginapp.dao.UserRepository;
-import org.springframework.beans.factory.annotation.Autowired;
-
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
-import java.util.Base64;
 
 @Entity
 public class User {
@@ -23,8 +19,6 @@ public class User {
     @Column(name = "SALT")
     private String salt;
 
-    @Autowired
-    UserRepository userRepository;
 
     public String getSalt() {
         return salt;
