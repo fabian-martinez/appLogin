@@ -1,16 +1,26 @@
 package com.loginapp.loginapp.model;
 
-import com.loginapp.loginapp.dao.DaoSession;
-import com.loginapp.loginapp.dao.DaoUser;
+import com.loginapp.loginapp.dao.UserRepository;
+import org.springframework.beans.factory.annotation.Autowired;
+
+import java.util.Base64;
 
 public class Login {
 
     private String userName;
     private String pass;
 
+    @Autowired
+    UserRepository userRepository;
+
     public boolean isValidLogin(){
         //query to database for is valid user
-        return pass.equals(new DaoUser().getUserPass(userName));
+        User user = userRepository.findById(userName).get();
+        return SecurityUtilsForPassword.isExpectedPassword(pass.toCharArray(),
+                Base64.getDecoder().
+                        decode(user.getSalt().getBytes()),
+                Base64.getDecoder().
+                        decode(user.getPass().getBytes()));
     }
 
     public String getUserName() {
@@ -29,18 +39,4 @@ public class Login {
         this.pass = pass;
     }
 
-    public ResponseSession CreateSession() {
-        Session session = new Session();
-        session.setUserActive(new DaoUser().getUserByUsername(userName));
-        //set new session parametters:
-        //   session.setExpirationDate();
-        //   session.setSessionId();
-        session.setState(true);
-
-        new DaoSession().setSession(session);
-
-        ResponseSession responseSession = new ResponseSession();
-        responseSession.setSession(session);
-        return responseSession;
-    }
 }

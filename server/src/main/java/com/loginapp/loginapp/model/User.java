@@ -1,14 +1,40 @@
 package com.loginapp.loginapp.model;
 
-import com.loginapp.loginapp.dao.DaoSession;
-import com.loginapp.loginapp.dao.DaoUser;
+import com.loginapp.loginapp.dao.UserRepository;
+import org.springframework.beans.factory.annotation.Autowired;
 
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import java.util.Base64;
+
+@Entity
 public class User {
 
+    @Id
+    @Column(name = "USER_NAME")
     private String userName;
+    @Column(name = "USER_PASS")
     private String pass;
+    @Column(name = "NAME")
     private String name;
+    @Column(name = "LASTNAME")
     private String lastName;
+    @Column(name = "SALT")
+    private String salt;
+
+    @Autowired
+    UserRepository userRepository;
+
+    public String getSalt() {
+        return salt;
+    }
+
+    public void setSalt(String salt) {
+        this.salt = salt;
+    }
+
+
 
     public String getUserName() {
         return userName;
@@ -40,27 +66,6 @@ public class User {
 
     public void setLastName(String lastName) {
         this.lastName = lastName;
-    }
-
-    public ResponseSession createSession(){
-        DaoUser daoUser = new DaoUser();
-        daoUser.getUser().setUserName(this.userName);
-        daoUser.getUser().setLastName(this.lastName);
-        daoUser.getUser().setName(this.name);
-        daoUser.getUser().setPass(this.pass);
-
-        Session session = new Session();
-        session.setUserActive(new DaoUser().getUserByUsername(userName));
-        //set new session parametters:
-        //   session.setExpirationDate();
-        //   session.setSessionId();
-        session.setState(true);
-
-        new DaoSession().setSession(session);
-
-        ResponseSession responseSession = new ResponseSession();
-        responseSession.setSession(session);
-        return responseSession;
     }
 
 }

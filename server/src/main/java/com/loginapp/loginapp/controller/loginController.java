@@ -16,17 +16,17 @@ public class loginController {
     private LoginService login;
 
     @PostMapping("/login")
-    public ResponseEntity<ResponseSession> retriveLogin(@RequestBody RequestLogin requestLogin){
+    public ResponseEntity<ResponseSession> retriveLogin(@RequestBody RequestLogin requestLogin) throws Exception {
         return new ResponseEntity<ResponseSession>(login.Login(requestLogin), HttpStatus.ACCEPTED);
     }
 
     @PostMapping("/signin")
-    public ResponseEntity<ResponseSession> retriveSigin(@RequestBody RequestUser requestUser){
+    public ResponseEntity<ResponseSession> retriveSigin(@RequestBody RequestUser requestUser) throws Exception {
         return new ResponseEntity<ResponseSession>(login.Signin(requestUser), HttpStatus.ACCEPTED);
     }
 
     @PostMapping("/user")
-    public ResponseEntity<ResponseUser> retriveUser(@RequestBody RequestSession requestSession){
+    public ResponseEntity<ResponseUser> retriveUser(@RequestBody RequestSession requestSession) throws Exception {
         return new ResponseEntity<ResponseUser>(login.getUser(requestSession), HttpStatus.ACCEPTED);
     }
 }

@@ -1,13 +1,21 @@
 package com.loginapp.loginapp.model;
+import com.loginapp.loginapp.dao.SessionRepository;
+import com.loginapp.loginapp.dao.UserRepository;
+import org.springframework.beans.factory.annotation.Autowired;
 
-import com.loginapp.loginapp.dao.DaoSession;
-import com.loginapp.loginapp.dao.DaoUser;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
+import java.util.Calendar;
 
+@Entity
 public class Session {
 
+    @Id
+    @GeneratedValue
     private String sessionId;
     private int expirationDate;
-    private User userActive;
+    private String userActive;
     private boolean state;
 
 
@@ -27,11 +35,11 @@ public class Session {
         this.expirationDate = expirationDate;
     }
 
-    public User getUserActive() {
+    public String getUserActive() {
         return userActive;
     }
 
-    public void setUserActive(User userActive) {
+    public void setUserActive(String userActive) {
         this.userActive = userActive;
     }
 
@@ -41,17 +49,6 @@ public class Session {
 
     public void setState(boolean state) {
         this.state = state;
-    }
-
-    public ResponseUser getUserById(String sessionId){
-
-        User user = new User();
-        user = new DaoUser().getUserByUsername(new DaoSession()
-                .getUsernameBySessionId(sessionId));
-
-        ResponseUser responseUser = new ResponseUser();
-        responseUser.setUser(user);
-        return responseUser;
     }
 
 }
