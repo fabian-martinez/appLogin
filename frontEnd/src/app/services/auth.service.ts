@@ -22,66 +22,64 @@ export class AuthService {
     }
 
     login( usuario:UsuarioModel ){
-    const authData = {
-      ...usuario,
-      returnSecureToken: true
-    };
-
-    return this.http.post(
-      `/api/login`,
-      {
-        "login":{
-          "username":usuario.email,
-          "pass":usuario.password
-        }
-      }
-    ).pipe(
-      map( resp => {
-        this.saveToken(resp['idToken'])
-        return resp;
-      })
-    );
-    }
-
-
-
-    createUser(usuario:UsuarioModel){
-    const authData = {
-      ...usuario,
-      returnSecureToken: true
+      const authData = {
+        ...usuario,
+        returnSecureToken: true
       };
 
-    return this.http.post(
-      '/api/signin',
-      {
-        "user":{
-          "userName":usuario.email,
-          "name":usuario.nombre,
-          "lastName":"",
-          "pass":usuario.password
+      return this.http.post(
+        `/api/login`,
+        {
+          "login":{
+            "userName":usuario.email,
+            "pass":usuario.password
+          }
         }
-      }
       ).pipe(
         map( resp => {
-          console.log(resp['session'].sessionId);
-          this.saveToken(resp['session'].sessionId);
+          this.saveToken(resp['session'].sessionId)
           return resp;
         })
       );
     }
 
+
+
+    createUser(usuario:UsuarioModel){
+      const authData = {
+        ...usuario,
+        returnSecureToken: true
+        };
+
+      return this.http.post(
+        '/api/signin',
+        {
+          "user":{
+            "userName":usuario.email,
+            "name":usuario.nombre,
+            "lastName":"",
+            "pass":usuario.password
+          }
+        }
+        ).pipe(
+          map( resp => {
+            this.saveToken(resp['session'].sessionId);
+            return resp;
+          })
+        );
+    }
+
     getUser( sessionId:String ){
       const authData = {
-        sessionId
+        "sessionId":sessionId
       };
-  
+      console.log(authData);
       return this.http.post(
         `/api/user`,
         authData
       ).pipe(
         map( resp => {
-          this.saveToken(resp['user'])
-          return resp;
+          return resp['user'];
         })
       );
       }
