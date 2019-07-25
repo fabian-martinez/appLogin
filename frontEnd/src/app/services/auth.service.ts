@@ -28,8 +28,13 @@ export class AuthService {
     };
 
     return this.http.post(
-      `${this.url}/login`,
-      authData
+      `/api/login`,
+      {
+        "login":{
+          "username":usuario.email,
+          "pass":usuario.password
+        }
+      }
     ).pipe(
       map( resp => {
         this.saveToken(resp['idToken'])
@@ -38,6 +43,8 @@ export class AuthService {
     );
     }
 
+
+
     createUser(usuario:UsuarioModel){
     const authData = {
       ...usuario,
@@ -45,15 +52,39 @@ export class AuthService {
       };
 
     return this.http.post(
-      `${this.url}/signin`,
-      authData
+      '/api/signin',
+      {
+        "user":{
+          "userName":usuario.email,
+          "name":usuario.nombre,
+          "lastName":"",
+          "pass":usuario.password
+        }
+      }
       ).pipe(
         map( resp => {
-          this.saveToken(resp['idToken'])
+          console.log(resp['session'].sessionId);
+          this.saveToken(resp['session'].sessionId);
           return resp;
         })
       );
     }
+
+    getUser( sessionId:String ){
+      const authData = {
+        sessionId
+      };
+  
+      return this.http.post(
+        `/api/user`,
+        authData
+      ).pipe(
+        map( resp => {
+          this.saveToken(resp['user'])
+          return resp;
+        })
+      );
+      }
 
     private saveToken( idToken: string) {
         this.userToken = idToken;
