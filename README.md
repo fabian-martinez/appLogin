@@ -1,5 +1,5 @@
 # Login App
-This is a web app login prototype. For this prototype was used python and django for authentication server with a mongodb database and fondend is deployed in Angular2+. Addicionaly is implemented a Docker container with logic for deployment.
+This is a web app login prototype. Frontend is deployed in Angular2+ and Backend is deployed in Java wiht spring boot framework. 
 
 # Getting Starteg
 
