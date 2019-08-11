@@ -33,6 +33,10 @@ Se requiere tener instalado doker y docker compose
 docker build -t fe-login-app:0.0.1 frontEnd/
 ```
 ```
-docker build -t app-login:0.0.1 
+docker build -t app-login:0.0.1 server/
+```
+2. se despligua el stack desde docker-compose
+```
+docker-compose up -d
 ```
 
