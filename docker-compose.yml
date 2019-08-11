@@ -1,0 +1,8 @@
+front-end:
+ image: fe-login-app:0.0.1
+ ports:
+ - "80:4200"
+ links:
+ - app-login:app-login
+app-login:
+ image: app-login:0.0.1

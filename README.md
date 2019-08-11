@@ -22,3 +22,17 @@ ng serve --proxy-config proxy.conf.json
 ```
 This command deploy application in url localhost:4200 and conected with server application through localhost:8080 
 
+
+# Despliegue desde docker-compose
+
+Se requiere tener instalado doker y docker compose
+
+1. Se construyen las imagenes de las dos aplicaciones
+
+```
+docker build -t fe-login-app:0.0.1 frontEnd/
+```
+```
+docker build -t app-login:0.0.1 
+```
+
